@@ -144,7 +144,7 @@ classdef dbcollection
             % parse input options
             opt = parse_options(varargin, config);
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
                               'dbc.download(name=''%s'',data_dir=''%s'',extract_data=%s,verbose=%s,is_test=%s)'), ...
                               opt.name, opt.data_dir, ...
                               logical2str(opt.extract_data), ...
@@ -186,7 +186,7 @@ classdef dbcollection
             % parse input options
             opt = parse_options(varargin, config);
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
                               'dbc.process(name=''%s'',task=''%s'',verbose=%s,is_test=%s)'), ...
                               opt.name, opt.task, ...
                               logical2str(opt.verbose), ...
@@ -249,7 +249,7 @@ classdef dbcollection
                 opt.keywords = '[]';
             end
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
                               'dbc.add(name=''%s'',task=''%s'',data_dir=''%s'',', ...
                               'file_path=''%s'',keywords=%s,is_test=%s)'), ...
                               opt.name, opt.task, opt.data_dir, opt.file_path, opt.keywords, ...
@@ -292,7 +292,7 @@ classdef dbcollection
             % parse input options
             opt = parse_options(varargin, config);
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
                               'dbc.remove(name=''%s'',task=%s,delete_data=%s,is_test=%s)'), ...
                               opt.name, opt.task, ...
                               logical2str(opt.delete_data), ...
@@ -359,7 +359,7 @@ classdef dbcollection
             % parse input options
             opt = parse_options(varargin, config);
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
                               'dbc.config_cache(field=''%s'',value=''%s'',delete_cache=%s, ', ...
                               'delete_cache_dir=%s,delete_cache_file=%s,reset_cache=%s, ', ...
                               'is_test=%s)'), ...
@@ -376,7 +376,7 @@ classdef dbcollection
         function query(obj, varargin)
             % Do simple queries to the cache.
             %
-            % list all available datasets for download/preprocess. (tenho que pensar melhor sobre este)
+            % list all available datasets for download/preprocess.
             %
             % Parameters:
             % -----------
@@ -398,7 +398,7 @@ classdef dbcollection
             % parse input options
             opt = parse_options(varargin, config);
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
                               'print(dbc.query(pattern=''%s'',is_test=%s))'), ...
                               opt.pattern, logical2str(opt.is_test));
 
@@ -406,15 +406,42 @@ classdef dbcollection
         end
 
         function info(obj, varargin)
-            % Prints the cache contents.
+            % Prints the cache contents and other information.
             %
+            % This method provides a dual functionality: (1) It displays
+            % the cache file content that shows which datasets are
+            % available for loading right now; (2) It can display all
+            % available datasets to use in the dbcollection package, and
+            % if a name is provided, it displays what tasks it contains
+            % for loading.
+            %
+            % The default is to display the cache file contents to the
+            % screen. To list the available datasets, set the 'name'
+            % input argument to 'all'. To list the tasks of a specific
+            % dataset, set the 'name' input argument to the name of the
+            % desired dataset (e.g., 'cifar10').
             % Prints the contents of the dbcollection.json cache file to the screen.
             %
             % Parameters
             % ----------
-            % list_datasets : bool
-            %     Print available datasets in the dbcollection package.
-            %     (optional, default=false)
+            % name : str
+            %     Name of the dataset to display information.
+            %     (optional, default='None')
+            % paths_info : bool
+            %     Print the paths info to screen.
+            %     (optional, default=true)
+            % datasets_info : str
+            %     Print the datasets info to screen.
+            %     If a string is provided, it selects
+            %     only the information of that string
+            %     (dataset name).
+            %     (optional, default='true')
+            % categories_info : str
+            %     Print the paths info to screen.
+            %     If a string is provided, it selects
+            %     only the information of that string
+            %     (dataset name).
+            %     (optional, default='true')
             % is_test : bool
             %     Flag used for tests.
             %     (optional, default=false)
@@ -424,17 +451,22 @@ classdef dbcollection
             %     None
 
             % default options
-            config = struct('list_datasets', false, ...
+            config = struct('name', 'None', ...
+                            'paths_info', true, ...
+                            'datasets_info', 'true', ...
+                            'categories_info', 'true', ...
                             'is_test', false);
 
             % parse input options
             opt = parse_options(varargin, config);
 
-            command = sprintf(strcat('import dbcollection.manager as dbc;', ...
-                              'dbc.info(list_datasets=%s,is_test=%s)'), ...
-                              logical2str(opt.list_datasets), ...
+            command = sprintf(strcat('import dbcollection as dbc;', ...
+                              'dbc.info(name=%s,paths_info=%s, datasets_info=%s, categories_info=%s,is_test=%s)'), ...
+                              none2str(opt.name), ...
+                              logical2str(opt.paths_info), ...
+                              logical2str2(opt.datasets_info), ...
+                              logical2str2(opt.categories_info), ...
                               logical2str(opt.is_test));
-
 
             run_command(command);
         end
@@ -504,6 +536,14 @@ function [total, names] = num_required_inputs(input)
     end
 end
 
+function str = none2str(input)
+    % Convert a boolean to a string
+    if strcmp(input, 'none')
+        str = 'None';
+    else
+        str = sprintf('''%s''', input);
+    end
+end
 
 function str = logical2str(bool)
     % Convert a boolean to a string
@@ -515,6 +555,16 @@ function str = logical2str(bool)
     end
 end
 
+function str = logical2str2(input)
+    % Check if the string is equal to true or false. Otherwise return the string.
+    if strcmp(input, 'true')
+        str = 'True';
+    elseif strcmp(input, 'false')
+        str = 'False';
+    else
+        str = sprintf('''%s''', input);
+    end
+end
 
 function path = get_cache_file_path(is_test)
     % get the home directory
