@@ -7,7 +7,7 @@ Internally it calls the Python's dbcollection module for data download/process/m
 
 ## Package installation
 
-## requirements
+## Requirements
 
 This package requires:
 
@@ -15,9 +15,7 @@ This package requires:
 - Matlab >= 2014a
 - [JSONlab](https://github.com/fangq/jsonlab)
 
-> Note: This code may work on other previous versions of Matlab,
-but since it was developed and tested only on Matlab 2014a
-I cannot provide any garantees concerning older version compatabilities.
+> Note: This code may work on other previous versions of Matlab but, since it was developed and tested only on Matlab 2014a, I cannot provide any garantees concerning older version compatabilities.
 
 
 ### Installation
