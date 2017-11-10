@@ -1,5 +1,7 @@
 # dbcollection for Matlab
 
+[![Build Status](https://travis-ci.org/dbcollection/dbcollection-matlab.svg?branch=master)](https://travis-ci.org/dbcollection/dbcollection-matlab)
+
 This is a simple Matlab wrapper for the Python's [dbcollection](https://github.com/dbcollection/dbcollection) module. The functionality is almost the same, appart from some few minor differences related to Lua, namely regarding setting up ranges when fetching data.
 
 Internally it calls the Python's dbcollection module for data download/process/management. The, Matlab interacts solely with the metadata `hdf5` file to fetch data from disk.
