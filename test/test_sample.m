@@ -8,5 +8,5 @@ function test_suite=test_sample
     initTestSuite;
 
 
-function test_sample
+function test_success
     assertTrue(true);
