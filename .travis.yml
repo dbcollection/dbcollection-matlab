@@ -88,45 +88,45 @@ install:
   # setup dbcollection matlab/octave package
   - echo "setup dbcollection in octave"
   # Ensure external packages folder exists and is empty
-  - rm -rf external;
-  - mkdir -p external;
+  - rm -rf external
+  - mkdir -p external
   # Move any .m files in the root level into a subfolder so we can test their
   # coverage without including the tests too
-  - mkdir -p dbcollection;
-  - mv *.m dbcollection;
+  - mkdir -p dbcollection
+  - cp *.m dbcollection/
   # Install required packages for Octave
-  ### - if [ -f ci/requirements-octave.txt ]; then
-  ###     ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
-  ###   fi;
+  - if [ -f ci/requirements-octave.txt ]; then
+      ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
+    fi;
   # Before running the tests, we will have to add our package and our
   # external dependencies to the octave path
-  - PACKAGE_FOLDER="dbcollection";
-  - ADDPATH_COMMAND="addpath(genpath(fullfile(pwd, '$PACKAGE_FOLDER')));";
-  - ADDPATH_COMMAND+=" addpath(genpath(fullfile(pwd, 'external')));";
-  - echo "ADDPATH_COMMAND| $ADDPATH_COMMAND";
+  - PACKAGE_FOLDER="dbcollection"
+  - ADDPATH_COMMAND="addpath(genpath(fullfile(pwd, '$PACKAGE_FOLDER')));"
+  - ADDPATH_COMMAND+=" addpath(genpath(fullfile(pwd, 'external')));"
+  - echo "ADDPATH_COMMAND| $ADDPATH_COMMAND"
   - echo "install done"
 
 before_script:
   - echo "before script"
-  - TEST_ARGS="'-recursive', '-verbose', '-junit_xml_file', 'testresults.xml'";
+  - TEST_ARGS="'-recursive', '-verbose', '-junit_xml_file', 'testresults.xml'"
     if [ "$COVERAGE" = "true" ]; then
         TEST_ARGS+=", '-with_coverage', '-cover', '$PACKAGE_FOLDER'";
         TEST_ARGS+=", '-cover_exclude', 'tests'";
         TEST_ARGS+=", '-cover_xml_file', 'coverage.xml'";
         TEST_ARGS+=", '-cover_json_file', 'coveralls.json'";
     fi;
-  - TEST_COMMAND="exit(~moxunit_runtests('test', $TEST_ARGS));";
-  - echo "TEST_COMMAND| $TEST_COMMAND";
+  - TEST_COMMAND="exit(~moxunit_runtests('test', $TEST_ARGS));"
+  - echo "TEST_COMMAND| $TEST_COMMAND"
   # Double-check we are still in the right directory
   - pwd
   # Check what octave packages we have installed
   - octave -q --eval "ver"
   # ---------------------------------------------------------------------------
   # Remove any cached results files from previous build, if present
-  - rm -f testresults.xml;
-  - rm -f coverage.xml;
-  - rm -f .coverage;
-  - rm -f coveralls.json;
+  - rm -f testresults.xml
+  - rm -f coverage.xml
+  - rm -f .coverage
+  - rm -f coveralls.json
   # ---------------------------------------------------------------------------
   # Set up folders for test results on Shippable
   - if [ "$SHIPPABLE" = "true" ]; then
@@ -136,7 +136,7 @@ before_script:
     fi;
 
 script:
-  - octave -q --eval "$ADDPATH_COMMAND $TEST_COMMAND";
+  - octave -q --eval "$ADDPATH_COMMAND $TEST_COMMAND"
 
 after_success:
   # Only run coveralls on Travis. When running on a public Travis-CI, the
