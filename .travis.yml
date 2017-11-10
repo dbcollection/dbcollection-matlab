@@ -3,13 +3,10 @@ dist: trusty
 language: java
 
 cache:
-  # Downloading octave takes a while, so let's cache apt
-  apt: true
+  apt: true   # Downloading octave takes a while
   directories:
-    # Cache octave packages
-    - $HOME/octave
-    # Cache other packages
-    - $HOME/external_cache
+    - $HOME/octave  # Cache octave packages
+    - $HOME/external_cache  # Cache other packages
 
 env:
   matrix:
@@ -20,6 +17,10 @@ matrix:
 
 before_install:
   - echo "before_install"
+  - echo "install python3"
+  - sudo apt-get update
+  - sudo apt-get install python3
+  - echo "install octave"
   # Remember the directory where our repository to test is located
   - REPOPATH="$(pwd)" && pwd
   # ---------------------------------------------------------------------------
@@ -87,6 +88,14 @@ install:
   - ADDPATH_COMMAND="addpath(genpath(fullfile(pwd, '$PACKAGE_FOLDER')));";
   - ADDPATH_COMMAND+=" addpath(genpath(fullfile(pwd, 'external')));";
   - echo "ADDPATH_COMMAND| $ADDPATH_COMMAND";
+
+after_install:
+  - echo "after_install start"
+  - pip install --upgrade pip
+  - pip --version
+  - echo "install dbcollection"
+  - pip install dbcollection
+  - echo "install done"
 
 ###############################################################################
 before_script:
