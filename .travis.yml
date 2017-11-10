@@ -68,6 +68,7 @@ before_install:
   - cd ${REPOPATH}
   - echo "install miniconda"
   - export PATH="$HOME/miniconda3/bin:$PATH"
+  - export PYVERSION=3.6
   - df -h
   - pwd
   - uname -a
