@@ -115,4 +115,4 @@ For a more detailed view of the Matlab's API documentation see [here](DOCUMENTAT
 
 ## License
 
-MIT license (see the [LICENSE](LICENSE) file)
+[MIT license](LICESNE)
