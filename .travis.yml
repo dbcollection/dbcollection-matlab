@@ -75,7 +75,7 @@ install:
     mkdir -p external;
   # Install required packages for Octave
   - if [ -f ci/requirements-octave.txt ]; then
-      mopi/mopi.sh requirements-octave.txt external "$HOME/external_cache";
+      mopi/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
     fi;
   # Before running the tests, we will have to add our package and our
   # external dependencies to the octave path
