@@ -14,10 +14,10 @@ Internally it calls the Python's dbcollection module for data download/process/m
 This package requires:
 
 - dbcollection (Python).
-- Matlab >= 2014a
+- Matlab >= 2014a or octave >= 4.0.0
 - [JSONlab](https://github.com/fangq/jsonlab)
 
-> Note: This code may work on other previous versions of Matlab but, since it was developed and tested only on Matlab 2014a, I cannot provide any garantees concerning older version compatabilities.
+> Note: This code may work on other previous versions of Matlab but, since it was developed and tested only on Matlab 2014a and octave >= 4.0.0, I cannot provide any garantees concerning older version compatabilities.
 
 
 ### Installation
