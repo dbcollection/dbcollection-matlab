@@ -95,7 +95,7 @@ install:
   - mkdir -p dbcollection
   - cp *.m dbcollection/
   # Install required packages for Octave
-  - if [ -f ci/requirements-octave.txt ]; then
+  - if [ -e ci/requirements-octave.txt ]; then
       chmod +x ci/mopi.sh
       ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
     fi;
