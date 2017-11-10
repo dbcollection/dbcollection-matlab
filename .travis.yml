@@ -13,7 +13,6 @@ env:
   matrix:
     - COVERAGE="false"
 
-
 matrix:
   fast_finish: true
 
@@ -111,7 +110,7 @@ install:
 before_script:
   - echo "before script"
   - TEST_ARGS="'-recursive', '-verbose', '-junit_xml_file', 'testresults.xml'"
-    if [ "$COVERAGE" = "true" ]; then
+  - if [ "$COVERAGE" = "true" ]; then
         TEST_ARGS+=", '-with_coverage', '-cover', '$PACKAGE_FOLDER'";
         TEST_ARGS+=", '-cover_exclude', 'tests'";
         TEST_ARGS+=", '-cover_xml_file', 'coverage.xml'";
