@@ -9,8 +9,10 @@ cache:
     - $HOME/external_cache  # Cache other packages
 
 env:
+  PYVERSION: 3.6
   matrix:
     - COVERAGE="false"
+
 
 matrix:
   fast_finish: true
@@ -64,17 +66,23 @@ before_install:
     fi;
   # Go back to the repository directory
   - cd ${REPOPATH}
-  - echo "install python3"
-  - sudo apt-get update
-  - sudo apt-get install python3
+  - echo "install miniconda"
+  - export PATH="$HOME/miniconda3/bin:$PATH"
+  - df -h
+  - pwd
+  - uname -a
+  - git --version
+  - git tag
+  - chmod +x ci/travis_install.sh
+  - ci/travis_install.sh
+  - echo "install done"
 
 install:
   - echo "install start"
   - echo "install dbcollection"
-  - pip install --upgrade pip
-  - pip --version
-  - echo "install dbcollection"
+  - source activate dbcollection
   - pip install dbcollection
+  - echo "install done"
   - echo "setup dbcollection in octave"
   # Ensure external packages folder exists and is empty
   - rm -rf external;
@@ -125,7 +133,6 @@ before_script:
     fi;
 
 script:
-  - echo "run script"
   - octave -q --eval "$ADDPATH_COMMAND $TEST_COMMAND";
 
 after_success:
