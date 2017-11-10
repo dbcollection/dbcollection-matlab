@@ -53,16 +53,17 @@ classdef dbcollection_utils_string_ascii
 
             str = char(input(:,1:end-1));
         end
+
+        % -------------------------- Utility functions --------------------------
+
+        function size_str = get_str_maxmimum_lenght(input_cell)
+            size_str = 0;
+            for i=1:length(input_cell)
+                size_str = max(size, length(input_cell{i}));
+            end
+        end
     end
 
 end
 
 
-% -------------------------- Utility functions --------------------------
-
-function size = get_str_maxmimum_lenght(input_cell)
-    size = 0;
-    for i=1:length(input_cell)
-        size = max(size, length(input_cell{i}));
-    end
-end

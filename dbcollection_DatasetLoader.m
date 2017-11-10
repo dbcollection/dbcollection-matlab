@@ -291,45 +291,44 @@ classdef dbcollection_DatasetLoader
             end
             error('Field name ''%s'' does not exist.', field_name)
         end
-    end
 
-end
+        % -------------------------- Utility functions --------------------------
 
-
-% -------------------------- Utility functions --------------------------
-
-function str = convert_ascii_to_string(array)
-    utils = dbcollection_utils();
-    str = utils.string_ascii.convert_ascii_to_str(array);
-end
+        function str = convert_ascii_to_string(array)
+            utils = dbcollection_utils();
+            str = utils.string_ascii.convert_ascii_to_str(array);
+        end
 
 
-function out = slice_array(A, ix, dim)
-    if length(ix) == 1
-        out = slice_(A, ix, dim)
-    else
-        out = slice_(A, ix, dim);
-        for i=2:lenght(ix)
-            out = [out; slice_(A, ix, dim)];
+        function out = slice_array(A, ix, dim)
+            if length(ix) == 1
+                out = slice_(A, ix, dim)
+            else
+                out = slice_(A, ix, dim);
+                for i=2:lenght(ix)
+                    out = [out; slice_(A, ix, dim)];
+                end
+            end
+        end
+
+
+        function out = slice_(A, ix, dim)
+            subses = repmat({':'}, [1 ndims(A)]);
+            subses{dim} = ix;
+            out = A(subses{:});
+        end
+
+
+        function out = flipH_array(array)
+            % Permute the array's dimensions
+            % (centered around the array/matrix dimension)
+            num_dims = ndims(array);
+            if num_dims == 2 && size(array, 1) == 1
+                out = flip(array);
+            else
+                out = permute(array, (ndims(array):-1:1));
+            end
         end
     end
-end
 
-
-function out = slice_(A, ix, dim)
-    subses = repmat({':'}, [1 ndims(A)]);
-    subses{dim} = ix;
-    out = A(subses{:});
-end
-
-
-function out = flipH_array(array)
-    % Permute the array's dimensions
-    % (centered around the array/matrix dimension)
-    num_dims = ndims(array);
-    if num_dims == 2 && size(array, 1) == 1
-        out = flip(array);
-    else
-        out = permute(array, (ndims(array):-1:1));
-    end
 end
