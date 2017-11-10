@@ -1,4 +1,5 @@
 # source: https://github.com/scottclowe/matlab-continuous-integration/blob/master/.travis.yml
+sudo: false
 dist: trusty
 language: java
 
@@ -96,6 +97,7 @@ install:
   - cp *.m dbcollection/
   # Install required packages for Octave
   - if [ -f ci/requirements-octave.txt ]; then
+      chmod +x ci/mopi.sh
       ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
     fi;
   # Before running the tests, we will have to add our package and our
