@@ -17,9 +17,6 @@ matrix:
 
 before_install:
   - echo "before_install"
-  - echo "install python3"
-  - sudo apt-get update
-  - sudo apt-get install python3
   - echo "install octave"
   # Remember the directory where our repository to test is located
   - REPOPATH="$(pwd)" && pwd
@@ -67,10 +64,18 @@ before_install:
     fi;
   # Go back to the repository directory
   - cd ${REPOPATH}
+  - echo "install python3"
+  - sudo apt-get update
+  - sudo apt-get install python3
 
-###############################################################################
 install:
   - echo "install start"
+  - echo "install dbcollection"
+  - pip install --upgrade pip
+  - pip --version
+  - echo "install dbcollection"
+  - pip install dbcollection
+  - echo "setup dbcollection in octave"
   # Ensure external packages folder exists and is empty
   - rm -rf external;
   - mkdir -p external;
@@ -88,16 +93,8 @@ install:
   - ADDPATH_COMMAND="addpath(genpath(fullfile(pwd, '$PACKAGE_FOLDER')));";
   - ADDPATH_COMMAND+=" addpath(genpath(fullfile(pwd, 'external')));";
   - echo "ADDPATH_COMMAND| $ADDPATH_COMMAND";
-
-after_install:
-  - echo "after_install start"
-  - pip install --upgrade pip
-  - pip --version
-  - echo "install dbcollection"
-  - pip install dbcollection
   - echo "install done"
 
-###############################################################################
 before_script:
   - echo "before script"
   - TEST_ARGS="'-recursive', '-verbose', '-junit_xml_file', 'testresults.xml'";
@@ -127,11 +124,9 @@ before_script:
       mkdir -p shippable/codecoverage;
     fi;
 
-
 script:
   - echo "run script"
   - octave -q --eval "$ADDPATH_COMMAND $TEST_COMMAND";
-
 
 after_success:
   # Only run coveralls on Travis. When running on a public Travis-CI, the
@@ -148,5 +143,3 @@ after_success:
   #    curl --verbose -F json_file=@`pwd`/coveralls.json https://coveralls.io/api/v1/jobs  || echo "Coveralls push failed";
   #    bash <(curl -s https://codecov.io/bash) || echo "Codecov push failed";
   #  fi;
-
-
