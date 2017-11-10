@@ -32,7 +32,7 @@ function test_load_mnist_2
                       info.is_test);
     assertEqual(info.name, loader.name)
     assertEqual(info.task, loader.task)
-    assertEqual([info.data_dir '/mnist'], loader.data_dir)    
+    assertEqual([info.data_dir '/mnist'], loader.data_dir)
 
 function test_download_mnist
     dbc = dbcollection();

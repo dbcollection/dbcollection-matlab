@@ -25,7 +25,7 @@ classdef dbcollection_utils_string_ascii
                 ascii_matrix = padarray(double(input), [0 1], 0, 'post');
             else
                 % get string maximum length of the cell list
-                maximum_lenght = get_str_maxmimum_lenght(input) + 1;
+                maximum_lenght = get_str_maxmimum_lenght(obj, input) + 1;
 
                 % pre-allocate the array
                 ascii_matrix = zeros(size(input,1), maximum_lenght);
@@ -53,16 +53,17 @@ classdef dbcollection_utils_string_ascii
 
             str = char(input(:,1:end-1));
         end
+
+        % -------------------------- Utility functions --------------------------
+
+        function size_str = get_str_maxmimum_lenght(obj, input_cell)
+            size_str = 0;
+            for i=1:length(input_cell)
+                size_str = max(size_str, length(input_cell{i}));
+            end
+        end
     end
 
 end
 
 
-% -------------------------- Utility functions --------------------------
-
-function size = get_str_maxmimum_lenght(input_cell)
-    size = 0;
-    for i=1:length(input_cell)
-        size = max(size, length(input_cell{i}));
-    end
-end
