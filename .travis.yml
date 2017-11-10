@@ -92,15 +92,17 @@ install:
   - mkdir -p external
   # Move any .m files in the root level into a subfolder so we can test their
   # coverage without including the tests too
-  - mkdir -p dbcollection
-  - cp *.m dbcollection/
   # Install required packages for Octave
-  - if [ -e ci/requirements-octave.txt ]; then
-      chmod +x ci/mopi.sh
-      ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
-    fi;
+  - chmod +x ci/mopi.sh
+  - ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
+  #- if [ -e ci/requirements-octave.txt ]; then
+  #    chmod +x ci/mopi.sh
+  #    ci/mopi.sh ci/requirements-octave.txt external "$HOME/external_cache";
+  #  fi;
   # Before running the tests, we will have to add our package and our
   # external dependencies to the octave path
+  - mkdir -p dbcollection
+  - cp *.m dbcollection/
   - PACKAGE_FOLDER="dbcollection"
   - ADDPATH_COMMAND="addpath(genpath(fullfile(pwd, '$PACKAGE_FOLDER')));"
   - ADDPATH_COMMAND+=" addpath(genpath(fullfile(pwd, 'external')));"
