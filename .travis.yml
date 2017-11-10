@@ -1,5 +1,4 @@
 # source: https://github.com/scottclowe/matlab-continuous-integration/blob/master/.travis.yml
-sudo: false
 dist: trusty
 language: java
 
