@@ -22,34 +22,34 @@ This package requires:
 
 ### Installation
 
-To install the dbcollection's Matlab API, first the Python's version must be installed on your system. If you do not have it already installed, then you can install it either via `pip`, `conda` or from [source](https://github.com/dbcollection/dbcollection#package-installation). Here we'll use `pip` to install this package:
+To install the dbcollection's Matlab API you must first have the Python's version installed in your system. If you do not have it already installed, then you can install it either via `pip`, `conda` or from [source](https://github.com/dbcollection/dbcollection#package-installation). Here we'll use `pip` to install this package:
 
-```
-pip install dbcollection
-```
-
-Then, download this git repository to disk:
-
-```
-git clone https://github.com/dbcollection/dbcollection-matlab
+```bash
+$ pip install dbcollection
 ```
 
-Finally, add the `dbcollection-matlab/` to your Matlab path:
+After you have the Python's version installed in your system, get the Matlab's API via the following repository:
 
+```bash
+$ git clone https://github.com/dbcollection/dbcollection-matlab
 ```
+
+Then, add `dbcollection-matlab/` to your Matlab's path:
+
+```matlab
 addpath('<path>/dbcollection-matlab/');
 ```
 
 
-Also, this package requires the [JSONlab](https://github.com/fangq/jsonlab) json encoder/decoder to work. To install this package just download the repo to disk
+Also, this package requires the [JSONlab](https://github.com/fangq/jsonlab) json encoder/decoder to work. To install this package just download the repo to disk:
 
-```
-git clone https://github.com/fangq/jsonlab
+```bash
+$ git clone https://github.com/fangq/jsonlab
 ```
 
-and add it to Matlab path:
+and add it your Matlab's path:
 
-```
+```matlab
 addpath('/path/to/jsonlab');
 ```
 
